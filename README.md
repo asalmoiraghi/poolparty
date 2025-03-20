@@ -1,3 +1,17 @@
+# PoolParty_fish 
+### This only changes the PPalign module. I have not used or changed PPstats or PPanalyze
+
+
+I have added: **PPalign_updated_ACS1_arm64.sh** & **PPalign_updated_ACS1_intel.sh**
+I have updated: **samplelist.txt** to remove the extra letter.
+
+These are my edited versions of PPalign. There are two versions of to use, with minimal differences between the two . One script version was run on a MacMini with arm64 architecture (original example files and striped bass data), and the other was used only for original example runs on a 2019 MacBook Pro with an 2.6 GHz 6-Core Intel core i7 processor. The Macbook Pro version did not want to properly run on the MacMin.
+
+The idea and process of the original PoolParty remains the same. Requirements remain the same. 
+
+
+######################################
+
 # :fish: PoolParty  :umbrella:
 
 ### A Pool-Seq Bioinformatic Pipeline (ver 0.8)
