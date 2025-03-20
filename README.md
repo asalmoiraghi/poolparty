@@ -3,7 +3,8 @@
 
 
 I have added: **PPalign_updated_ACS1_arm64.sh** & **PPalign_updated_ACS1_intel.sh**
-I have updated: **samplelist.txt** to remove the extra letter.
+
+I have have added **Update_ACS1_samplelist.txt** to be used in place of samplelist. Rename this file to just samplelist.txt.
 
 These are my edited versions of PPalign. There are two versions of to use, with minimal differences between the two . One script version was run on a MacMini with arm64 architecture (original example files and striped bass data), and the other was used only for original example runs on a 2019 MacBook Pro with an 2.6 GHz 6-Core Intel core i7 processor. The Macbook Pro version did not want to properly run on the MacMin.
 
