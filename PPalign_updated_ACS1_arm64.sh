@@ -3,26 +3,12 @@
 #PoolParty v0.81 (v1.1_ACS)
 #PPalign
 
-
-######### notes ###############
-#cd /usr/local/bin/poolparty/example
-#ln -s /usr/local/bin/poolparty/PPalign_updated_ACS1.sh /usr/local/bin/PPalign_ACS
-#sudo chmod +x /usr/local/bin/poolparty/PPalign_updated_ACS1.sh
-#to work, you need to make an outdir with the following already in it:
-  #samplelist.txt
-  #.config
-
 ###########################
-
+# Self-Notes:
 ###For prepping refernce genome in example files  
 # bwa index -a bwtsw PP_genome.fa  
 # samtools faidx PP_genome.fa
 # java -jar /opt/homebrew/opt/picard-tools/libexec/picard.jar CreateSequenceDictionary -REFERENCE  PP_genome.fa - OUTPUT  PP_genome.fa.dict
-
-
-
-####
-# might need to change file owner permissions if receiving issues
 
 ###
 
@@ -55,12 +41,12 @@ declare -i MAPQ
 declare -i SNPQ
 declare -i MINDP
 
-#Get date of run and save an additional config file with run parameters
+Get date of run and save an additional config file with run parameters
 RUNDATE=$(date +'%m_%d_%Y')
 
 echo "ALERT: Beginning PoolParty run at $(date)"
 
-########################################################################################################
+####################################################################################################
 ####-----------------------------------------RUNNING-----------------------------------------------#####
 ########################################################################################################
 
@@ -71,7 +57,6 @@ SAMPLELIST="$INDIR/samplelist.txt"
 leN=$(wc -l < "$SAMPLELIST")
 echo "Line count: $leN"
 echo "SAMPLELIST path: $SAMPLELIST"
-#echo "Line count in samplelist.txt: $leN" #added by me
 ###########
 
 	#Check for samplelist file, quit if it does not exist
@@ -151,52 +136,35 @@ echo "SAMPLELIST path: $SAMPLELIST"
 			exit
 		fi
 
-########		
-	#Ensure that all dependencies exist on the system (both the path and the command have to fail)
-#		if  ( [[ $(command -v "$FASTQC")  = "" ]]  &&  [[ ! -f $FASTQC ]] ) || ( [[ $(command -v "$BWA")  = "" ]]  &&  [[ ! -f $BWA ]] ) \
-#				|| ( [[ $(command -v "$SAMTOOLS")  = "" ]]  &&  [[ ! -f $SAMTOOLS ]] ) ||  ( [[ $(command -v "$PICARDTOOLS")  = "" ]]  &&  [[ ! -f $PICARDTOOLS ]] ) \
-#				|| ( [[ $(command -v "$SAMBLASTER")  = "" ]]  &&  [[ ! -f $SAMBLASTER ]] ) || ( [[ $(command -v "$BCFTOOLS")  = "" ]]  &&  [[ ! -f $BCFTOOLS ]] ) ; then
-#			echo "ERROR: One or more dependencies are incorrect, double check dependency locations and names"
-#			echo "Type each dependency into the terminal, as it is listed in the config file, and ensure that it initiates"		
-#			exit
-#		fi
-######
-
 #### Ensure that all dependencies exist on the system (both the path and the command have to fail); individual checks
 
 		if  ( [[ $(command -v "$FASTQC")  = "" ]]  &&  [[ ! -f $FASTQC ]] ) ; then
 			echo "ERROR: FASTQC dependency is incorrect, double check dependency locations"
-			#echo "Type each dependency into the terminal, as it is listed in the config file, and ensure that it initiates"		
 			exit
 		fi
 		
 		if   ( [[ $(command -v "$BWA")  = "" ]]  &&  [[ ! -f $BWA ]] ) ; then
-			echo "ERROR: BWA dependency is incorrect, double check dependency locations"
-			#echo "Type each dependency into the terminal, as it is listed in the config file, and ensure that it initiates"		
+			echo "ERROR: BWA dependency is incorrect, double check dependency locations"		
 			exit
 		fi
 		
 		if  ( [[ $(command -v "$SAMTOOLS")  = "" ]]  &&  [[ ! -f $SAMTOOLS ]] ) ; then
 			echo "ERROR: SAMTOOLS dependency are incorrect, double check dependency locations"
-			#echo "Type each dependency into the terminal, as it is listed in the config file, and ensure that it initiates"		
 			exit
 		fi
 		
 		if  ( [[ $(command -v "$PICARDTOOLS")  = "" ]]  &&  [[ ! -f $PICARDTOOLS ]] ) ; then
 			echo "ERROR: PICARDTOOLS dependency is incorrect, double check dependency locations"
-			#echo "Type each dependency into the terminal, as it is listed in the config file, and ensure that it initiates"		
 			exit
 		fi
 		
 		if  ( [[ $(command -v "$SAMBLASTER")  = "" ]]  &&  [[ ! -f $SAMBLASTER ]] ) ; then
 			echo "ERROR: SAMBLASTER dependency is incorrect, double check dependency locations"
-			#echo "Type each dependency into the terminal, as it is listed in the config file, and ensure that it initiates"		
 			exit
 		fi
 		
 		if  ( [[ $(command -v "$BCFTOOLS")  = "" ]]  &&  [[ ! -f $BCFTOOLS ]] ) ; then
 			echo "ERROR: BCFTOOLS dependency is incorrect, double check dependency locations and names"
-			#echo "Type each dependency into the terminal, as it is listed in the config file, and ensure that it initiates"		
 			exit 
 		fi
 		
@@ -281,7 +249,8 @@ echo "SAMPLELIST path: $SAMPLELIST"
  	POPS=$(cat $OUTDIR/${OUTPOP}_sample_pops.txt)
  		aCHCK1=$(wc -l $OUTDIR/${OUTPOP}_sample_files.txt | awk '{print $1}' )
  		aCHCK2=$(wc -l $OUTDIR/${OUTPOP}_sample_pops.txt | awk '{print $1}' )
- 			#Ensure each sample has been given a population designation
+ 			
+    #Ensure each sample has been given a population designation
  			if [[ $aCHCK1 != $aCHCK2  ]] ; then
  				echo "ERROR: Something wrong with samplelist.txt. $aCHCK1 samples but only $aCHCK2 population designations.."
  				echo "Check for empty lines in samplelist.txt"
@@ -317,7 +286,7 @@ echo "SAMPLELIST path: $SAMPLELIST"
  		if [[ $CHCK1 != $CHCK3  ]] ; then
          	echo "ERROR: number of samples and prefixes don't match up ($CHCK1 vs $CHCK3) ; there is likely something wrong with the filenames or samplelist"
  			echo "Note that file name prefixes (text before the first underscore) must be unique for the paired files!"
- 			echo "Check _sample_files.txt, paired-end libraries should be stacked on top of one another; if this isn't the case change the naming convention"
+ 			echo "Check _sample_files.txt, paired-end libraries should be stacked on top of one another; if this isn't the case, change the naming convention"
  			exit
  		fi
  fi
@@ -647,7 +616,6 @@ task() {
   echo "declare i=$1"
 			#declare -i pnuM=$(wc -l ${OUTDIR}/pops/${i}.txt |  cut -f1 -d' ')
 			#declare -a barray=$(awk '{print "'${OUTDIR}/BAM/'"$0"_filtered.bam"}' ${OUTDIR}/pops/${i}.txt)
-      #declare -i pnuM=$(wc -l ${OUTDIR}/pops/${i}.txt |  cut -f1 -d' ')
       declare -i pnuM=$(wc -l < "${OUTDIR}/pops/${i}.txt")
 			declare -a barray=($(awk -v outdir="${OUTDIR}/BAM/" '{print outdir $1 "_filtered.bam"}' ${OUTDIR}/pops/${i}.txt))
 
@@ -672,7 +640,6 @@ for i in $(cat ${OUTDIR}/pops/${OUTPOP}_files_for_pops.txt); do
 done
 
 
-
 # Parallel execution of tasks for each population
 N=$THREADZ
 open_sem "$N"
@@ -681,7 +648,6 @@ for i in "${farray[@]}"; do
 done
 wait
 echo "ALERT: Samtools finished merging all BAMs at $(date)"
-echo "Line 708"
 
 
 echo "Call SNPs and print variant sites"
@@ -714,7 +680,7 @@ echo "Call SNPs and print variant sites"
 				grep -v "^#"  $OUTDIR/${OUTPOP}.VCF | awk '{gsub("=|;", "\t", $0); print;}' \
 						| awk '{print $1,$2,$6,$9}'  >  $OUTDIR/${OUTPOP}_variants.txt
 		else
-			${BCFTOOLS} mpileup -Ou -f ${GENOME} -a DP -a AD -B -d 1500 $COMBINE |  ${BCFTOOLS} call --threads ${THREADZ} -mv -Ov  >  $OUTDIR/${OUTPOP}_full.VCF 
+			${BCFTOOLS} mpileup -Ou -f ${GENOME} -a DP -a AD -B -d 1500 $COMBINE |  ${BCFTOOLS} call --threads ${THREADZ} -mv -Ov  >  $OUTDIR/${OUTPOP}_full.VCF ##change -d 1500 to whatever fits your coverage needs
 				#### changed $SAMTOOLS to $BCFTOOLS to use mpileup 
 				#### removed u in -uf 
 				#### added -a DP -a AD -d 1500 to line
