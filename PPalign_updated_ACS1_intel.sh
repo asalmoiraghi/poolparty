@@ -2,13 +2,7 @@
 
 #PoolParty v0.81 - 1.0_ACS
 #PPalign
-#cd /usr/local/bin/poolparty/example
-#ln -s /usr/local/bin/poolparty/PPalign_updated_ACS1.sh /usr/local/bin/PPalign_ACS
-#sudo chmod +x /usr/local/bin/poolparty/PPalign_updated_ACS1.sh
-#to work, you need to make an outdir with the following already in it:
-  #samplelist.txt
-  #.config
-  #
+
   ##########################
 #
 
@@ -137,52 +131,35 @@ echo "SAMPLELIST path: $SAMPLELIST"
 			exit
 		fi
 
-########		
-	#Ensure that all dependencies exist on the system (both the path and the command have to fail)
-#		if  ( [[ $(command -v "$FASTQC")  = "" ]]  &&  [[ ! -f $FASTQC ]] ) || ( [[ $(command -v "$BWA")  = "" ]]  &&  [[ ! -f $BWA ]] ) \
-#				|| ( [[ $(command -v "$SAMTOOLS")  = "" ]]  &&  [[ ! -f $SAMTOOLS ]] ) ||  ( [[ $(command -v "$PICARDTOOLS")  = "" ]]  &&  [[ ! -f $PICARDTOOLS ]] ) \
-#				|| ( [[ $(command -v "$SAMBLASTER")  = "" ]]  &&  [[ ! -f $SAMBLASTER ]] ) || ( [[ $(command -v "$BCFTOOLS")  = "" ]]  &&  [[ ! -f $BCFTOOLS ]] ) ; then
-#			echo "ERROR: One or more dependencies are incorrect, double check dependency locations and names"
-#			echo "Type each dependency into the terminal, as it is listed in the config file, and ensure that it initiates"		
-#			exit
-#		fi
-######
-
 #### Ensure that all dependencies exist on the system (both the path and the command have to fail); individual checks
 
 		if  ( [[ $(command -v "$FASTQC")  = "" ]]  &&  [[ ! -f $FASTQC ]] ) ; then
 			echo "ERROR: FASTQC dependency is incorrect, double check dependency locations"
-			#echo "Type each dependency into the terminal, as it is listed in the config file, and ensure that it initiates"		
 			exit
 		fi
 		
 		if   ( [[ $(command -v "$BWA")  = "" ]]  &&  [[ ! -f $BWA ]] ) ; then
 			echo "ERROR: BWA dependency is incorrect, double check dependency locations"
-			#echo "Type each dependency into the terminal, as it is listed in the config file, and ensure that it initiates"		
 			exit
 		fi
 		
 		if  ( [[ $(command -v "$SAMTOOLS")  = "" ]]  &&  [[ ! -f $SAMTOOLS ]] ) ; then
 			echo "ERROR: SAMTOOLS dependency are incorrect, double check dependency locations"
-			#echo "Type each dependency into the terminal, as it is listed in the config file, and ensure that it initiates"		
 			exit
 		fi
 		
 		if  ( [[ $(command -v "$PICARDTOOLS")  = "" ]]  &&  [[ ! -f $PICARDTOOLS ]] ) ; then
 			echo "ERROR: PICARDTOOLS dependency is incorrect, double check dependency locations"
-			#echo "Type each dependency into the terminal, as it is listed in the config file, and ensure that it initiates"		
 			exit
 		fi
 		
 		if  ( [[ $(command -v "$SAMBLASTER")  = "" ]]  &&  [[ ! -f $SAMBLASTER ]] ) ; then
 			echo "ERROR: SAMBLASTER dependency is incorrect, double check dependency locations"
-			#echo "Type each dependency into the terminal, as it is listed in the config file, and ensure that it initiates"		
 			exit
 		fi
 		
 		if  ( [[ $(command -v "$BCFTOOLS")  = "" ]]  &&  [[ ! -f $BCFTOOLS ]] ) ; then
 			echo "ERROR: BCFTOOLS dependency is incorrect, double check dependency locations and names"
-			#echo "Type each dependency into the terminal, as it is listed in the config file, and ensure that it initiates"		
 			exit 
 		fi
 		
